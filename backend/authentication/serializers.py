@@ -1,15 +1,14 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from .models import CustomUser
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     @classmethod
     def get_token(cls, user):
+        print(user)
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
 
-        # Add custom claims
-        # token['fav_color'] = user.fav_color
         return token
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -23,7 +22,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ('email', 'username', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
