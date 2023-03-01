@@ -7,6 +7,7 @@ UserModel = get_user_model()
 
 
 class EmailBackend(ModelBackend):
+    print("\n\n\n\n\nhey\n\n\n\n")
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:
             user = UserModel.objects.get(Q(username__iexact=username) | Q(email__iexact=username))

@@ -153,4 +153,4 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL = "authentication.CustomUser"
-AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
+AUTHENTICATION_BACKENDS = ['authentication.backends.EmailBackend']
