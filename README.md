@@ -63,7 +63,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /session
+  * URL: /user/login
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -122,6 +122,90 @@ information.
     }
     ```
 
+## Sign Up a User
+
+Creates a new user, logs them in as the current user, and returns the current
+user's information.
+
+* Require Authentication: false
+* Request
+  * Method: POST
+  * URL: /user/create
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "username": "JohnSmith",
+      "email": "john.smith@gmail.com",
+      "password": "secret password"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "username": "JohnSmith",
+      "email": "john.smith@gmail.com",
+    }
+    ```
+
+* Error response: User already exists with the specified email
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "User already exists",
+      "statusCode": 403,
+      "errors": {
+        "email": "User with that email already exists"
+      }
+    }
+    ```
+
+* Error response: User already exists with the specified username
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "User already exists",
+      "statusCode": 403,
+      "errors": {
+        "username": "User with that username already exists"
+      }
+    }
+    ```
+
+* Error response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "email": "Invalid email",
+        "username": "Username is required",
+      }
+    }
+    ```
+
+
 ## Get All Accounts by the Current User
 
 Returns all the accounts owned by the user.
@@ -152,7 +236,7 @@ Returns all the accounts owned by the user.
     ```
 
 
-## Create an Account for the Current User
+## Create Account for the Current User
 
 Creates and returns a new account for the user.
 

@@ -4,6 +4,6 @@ from .views import ObtainTokenPair, CustomUserCreate
 
 urlpatterns = [
     path('user/create/', CustomUserCreate.as_view(), name="create_user"),
-    path('token/obtain/', ObtainTokenPair.as_view(), name='token_create'),
-    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('user/login/', ObtainTokenPair.as_view(), name='token_create'),
+    path('user/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
