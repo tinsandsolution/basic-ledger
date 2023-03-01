@@ -12,6 +12,10 @@ This is the database schema:
 
 https://mui.com/material-ui/getting-started/installation/
 
+Notes:
+
+Because user authentication is not a core part of this assessment,
+
 # API Routes
 
 ## All endpoints that require authentication
@@ -48,30 +52,6 @@ correct role(s) or permission(s).
     {
       "message": "Forbidden",
       "statusCode": 403
-    }
-    ```
-
-## Get the Current User
-
-Returns the information about the current user that is logged in.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * URL: /users/current
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "email": "john.smith@gmail.com",
-      "username": "JohnSmith",
     }
     ```
 
