@@ -17,6 +17,11 @@ class ObtainTokenPair(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
     def post(self, request, *args, **kwargs):
         username_or_email = request.data.get('username')
+        password = request.data.get('password')
+        if not username_or_email or not password:
+            return Response({'error': 'Please provide both username/email and password'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
         user_model = get_user_model()
         user = user_model.objects.get(Q(username__iexact=username_or_email) | Q(email__iexact=username_or_email))
 

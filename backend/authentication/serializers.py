@@ -13,9 +13,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     @classmethod
     def get_token(cls, user):
-        # print(request)
-        print("dsfasdfasfdas\n\n\n")
-        print(f"\n\n\n\n{user}")
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
 
         return token

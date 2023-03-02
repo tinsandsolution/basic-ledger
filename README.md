@@ -70,7 +70,7 @@ information.
 
     ```json
     {
-      "credential": "john.smith@gmail.com",
+      "username": "john.smith@gmail.com",
       "password": "secret password"
     }
     ```
@@ -83,12 +83,8 @@ information.
 
     ```json
     {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Smith",
       "email": "john.smith@gmail.com",
       "username": "JohnSmith",
-      "previewImage": "url"
     }
     ```
 
@@ -100,8 +96,7 @@ information.
 
     ```json
     {
-      "message": "Invalid credentials",
-      "statusCode": 401
+      "detail": "No active account found with the given credentials"
     }
     ```
 
@@ -113,12 +108,7 @@ information.
 
     ```json
     {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "email": "Email is required",
-        "password": "Password is required"
-      }
+      "error": "Please provide both username/email and password"
     }
     ```
 
@@ -156,35 +146,15 @@ user's information.
     }
     ```
 
-* Error response: User already exists with the specified email
-  * Status Code: 403
+* Error response: User already exists with the specified email/password
+  * Status Code: 400
   * Headers:
     * Content-Type: application/json
   * Body:
 
     ```json
     {
-      "message": "User already exists",
-      "statusCode": 403,
-      "errors": {
-        "email": "User with that email already exists"
-      }
-    }
-    ```
-
-* Error response: User already exists with the specified username
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "User already exists",
-      "statusCode": 403,
-      "errors": {
-        "username": "User with that username already exists"
-      }
+      "errors":["User with this email or username already exists"]
     }
     ```
 
@@ -195,14 +165,17 @@ user's information.
   * Body:
 
     ```json
-    {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "email": "Invalid email",
-        "username": "Username is required",
-      }
-    }
+  {
+      "email": [
+          "This field is required."
+      ],
+      "username": [
+          "This field is required."
+      ],
+      "password": [
+          "This field is required."
+      ]
+  }
     ```
 
 
