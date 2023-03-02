@@ -24,6 +24,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     """
     Currently unused in preference of the below.
     """
+
     email = serializers.EmailField(
         required=True
     )
@@ -37,6 +38,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
+        email = validated_data.get('email')
+        username = validated_data.get('username')
+
+        if CustomUser.objects.filter(email=email).exists() or CustomUser.objects.filter(username=username).exists():
+            raise serializers.ValidationError('User with this email or username already exists')
+
         instance = self.Meta.model(**validated_data)  # as long as the fields are the same, we can just use this
         if password is not None:
             instance.set_password(password)
