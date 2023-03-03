@@ -10,6 +10,15 @@ from django.http import request
 
 from .serializers import MyTokenObtainPairSerializer, CustomUserSerializer
 
+class Hello(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        # print(request.headers)
+        print(request.user.id)
+        content = {'username': request.user.username}
+        return Response(content)
+
 class ObtainTokenPair(TokenObtainPairView):
     permission_classes = (permissions.AllowAny,)
     # this prints the entire request object
@@ -24,11 +33,12 @@ class ObtainTokenPair(TokenObtainPairView):
 
         user_model = get_user_model()
         user = user_model.objects.get(Q(username__iexact=username_or_email) | Q(email__iexact=username_or_email))
-
+        print(str(user))
         # Pass the user object to the serializer and also the 'username_or_email' value
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         token_response = serializer.validated_data
+        token_response["username"] = str(user)
 
         # Return the token pair response
         return Response(token_response, status=status.HTTP_200_OK)
