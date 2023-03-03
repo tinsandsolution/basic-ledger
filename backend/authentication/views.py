@@ -14,8 +14,6 @@ class Hello(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        # print(request.headers)
-        print(request.user.id)
         content = {'username': request.user.username}
         return Response(content)
 
@@ -28,12 +26,16 @@ class ObtainTokenPair(TokenObtainPairView):
         username_or_email = request.data.get('username')
         password = request.data.get('password')
         if not username_or_email or not password:
-            return Response({'error': 'Please provide both username/email and password'},
+            return Response({'errors': ['Please provide both username/email and password']},
                             status=status.HTTP_400_BAD_REQUEST)
 
         user_model = get_user_model()
-        user = user_model.objects.get(Q(username__iexact=username_or_email) | Q(email__iexact=username_or_email))
-        print(str(user))
+        print("user model: " + str(user_model))
+        try:
+            user = user_model.objects.get(Q(username__iexact=username_or_email) | Q(email__iexact=username_or_email))
+        except user_model.DoesNotExist:
+            return Response({"errors" : ['No active account found with the given credentials']}, status=401)
+        # print(str(user))
         # Pass the user object to the serializer and also the 'username_or_email' value
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

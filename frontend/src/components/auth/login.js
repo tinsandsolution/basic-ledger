@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { redirect } from 'react-router-dom';
 import { login } from '../../store/session';
+import './Login.css'
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -41,9 +42,9 @@ const LoginForm = () => {
   }
 
   return (
-    <form className="modal-form" onSubmit={onLogin}>
+    <form className="login-form" onSubmit={onLogin}>
       <div className='form-title'> Log In Here! </div>
-      <div className='modal-errors'>
+      <div className='login-errors'>
         {errors.map((error, ind) => (
           <div className="modal-form-error" key={ind}>{error}</div>
         ))}

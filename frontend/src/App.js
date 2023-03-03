@@ -22,9 +22,8 @@ function App() {
   }
   return (
     <div className="App">
-      {/* if user is null, show loginform */}
-      <div>hi</div>
-      {user ? <div>hi</div> : <LoggedOutPage />}
+
+      {user ? <div>hey</div> : <LoggedOutPage />}
     </div>
   );
 }

@@ -6,7 +6,7 @@ def custom_exception_handler(exc, context):
     # Call the default exception handler first,
     # to get the standard error response.
     response = exception_handler(exc, context)
-    print(context,"\n\n\n")
+    # print(context,"\n\n\n")
     if response is not None:
         # If the response is already a JSON response, return it unchanged.
         if response.content_type == 'application/json':

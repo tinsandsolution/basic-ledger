@@ -96,7 +96,7 @@ information.
 
     ```json
     {
-      "detail": "No active account found with the given credentials"
+      "errors": ["No active account found with the given credentials"]
     }
     ```
 
