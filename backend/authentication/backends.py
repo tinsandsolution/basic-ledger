@@ -17,7 +17,8 @@ class EmailBackend(ModelBackend):
             return
         except UserModel.MultipleObjectsReturned:
             user = UserModel.objects.filter(Q(username__iexact=username) | Q(email__iexact=username)).order_by('id').first()
-        # if not user.check_password(password):
-            # return Response({"errors": ["No active account found with the given credentials"]}, status=401)
+        if not user.check_password(password):
+            return Response({"errors": ["No active account found with the given credentials"]}, status=401)
         if user.check_password(password) and self.user_can_authenticate(user):
+            print('authenticated')
             return user

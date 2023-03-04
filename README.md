@@ -229,10 +229,7 @@ Creates and returns a new account for the user.
 
     ```json
     {
-        "id": 1,
         "account_number": 1234567812345678,
-        "account_owner": 1,
-        "current_balance": 3231.31,
     }
     ```
 
