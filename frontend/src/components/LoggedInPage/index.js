@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { redirect } from 'react-router-dom';
 // import { login } from '../../store/session';
+// import { getAllAccounts } from '../../store/ledger';
 import './LoggedInPage.css';
 import { Button } from '@mui/material';
+import AccountsPage from '../AllAccounts';
 
 const LoggedInPage = () => {
   const [view, setView] = useState("accounts");
   const user = useSelector(state => state.session.user);
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   (async() => {
+  //     await dispatch(getAllAccounts());
+  //     // setLoaded(true);
+  //   })();
+  // }, [dispatch]);
 
   return (
     <div className='logged-in'>
@@ -26,7 +36,9 @@ const LoggedInPage = () => {
           >Transactions</Button>
         </div>
       </div>
-      <div className='main'></div>
+      <div className='main'>
+        {view === "accounts" ? <AccountsPage /> : <div>transactions</div>}
+      </div>
     </div>
   );
 };

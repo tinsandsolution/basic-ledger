@@ -1,0 +1,18 @@
+.account-block {
+    border: 1px solid black;
+    color: black;
+    width: 300px;
+    aspect-ratio: 5/2.5;
+    margin: 2%;
+}
+
+.all-accounts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+    align-items: left;
+    width: 100%;
+    /* height: 100%; */
+    /* border: 1px solid blue; */
+}
