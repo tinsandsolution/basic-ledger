@@ -3,3 +3,7 @@
     border-radius: 15px;
     padding: 2%;
 }
+
+.form-single-data > input {
+    width: 95%;
+}

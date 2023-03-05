@@ -80,8 +80,9 @@ export const logout = () => async (dispatch) => {
 };
 
 
-export const signUp = (username, email, password) => async (dispatch) => {
-  const response = await fetch('/api/user/create', {
+export const signUp = (email, password, username) => async (dispatch) => {
+  console.log(username, email, password)
+  const response = await fetch('http://127.0.0.1:8000/api/user/create/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -93,9 +94,9 @@ export const signUp = (username, email, password) => async (dispatch) => {
     }),
   });
 
-  if (response.ok) {
+  if (response.status === 201) {
     const data = await response.json();
-    dispatch(setUser(data))
+    dispatch(login(username, password))
     return null;
   } else if (response.status < 500) {
     const data = await response.json();

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { redirect } from 'react-router-dom';
-import { login } from '../../store/session';
+import { signUp } from '../../store/session';
 import './Login.css'
 
-const LoginForm = () => {
+const SignupForm = () => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const dispatch = useDispatch();
 
   const onLogin = async (e) => {
@@ -20,7 +21,7 @@ const LoginForm = () => {
     setErrors(errors)
 
     if (!errors.length) {
-      const data = await dispatch(login(email, password));
+      const data = await dispatch(signUp(email, password, username));
       if (data) {
         console.log(data)
         setErrors(data);
@@ -36,14 +37,13 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  const loginDemo = () =>{
-    setEmail('demo@aa.io');
-    setPassword('password')
-  }
+  const updateUsername = (e) => {
+    setUsername(e.target.value);
+  };
 
   return (
     <form className="login-form" onSubmit={onLogin}>
-      <div className='form-title'> Log In Here! </div>
+      <div className='form-title'> Sign Up Here! </div>
       <div className='login-errors'>
         {errors.map((error, ind) => (
           <div className="modal-form-error" key={ind}>{error}</div>
@@ -53,9 +53,18 @@ const LoginForm = () => {
         <input
           name='email'
           type='text'
-          placeholder='Email/Username'
+          placeholder='Email'
           value={email}
           onChange={updateEmail}
+        />
+      </div>
+      <div className='form-single-data'>
+        <input
+          name='username'
+          type='text'
+          placeholder= 'Username'
+          value={username}
+          onChange={updateUsername}
         />
       </div>
       <div className='form-single-data'>
@@ -67,10 +76,9 @@ const LoginForm = () => {
           onChange={updatePassword}
         />
       </div>
-      <button className="black-button button-margin" type='submit'>Login</button>
-      <button className="black-button button-margin-2" onClick={loginDemo}> Demo User </button>
+      <button className="black-button button-margin" type='submit'>Sign Up</button>
     </form>
   );
 };
 
-export default LoginForm;
+export default SignupForm;
