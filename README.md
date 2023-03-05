@@ -18,6 +18,8 @@ Because user authentication is not a core part of this assessment,
 
 # API Routes
 
+all urls prefixed with '/api'
+
 ## All endpoints that require authentication
 
 All endpoints that require a current user to be logged in.
@@ -334,3 +336,81 @@ Returns the balance of an account by its id.
       }
     ```
 * Error response: Couldn't find an account with the specified id
+
+
+## Get Transactions of An Account
+Returns the transactions of an account by its id.
+
+* Require Authentication: true
+* Require proper authorization: Account must belong to the current user
+* Request
+  * Method: GET
+  * URL: /accounts/:accountId/transactions
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    [
+        {
+            "transaction_type": "DEBIT",
+            "amount": 200.23,
+            "note": "1",
+            "date": "2023-03-05T20:58:23.368308Z",
+            "id": 2,
+            "account_number": "0000000000000001"
+        },
+        {
+            "transaction_type": "DEBIT",
+            "amount": 1.11,
+            "note": "41234132423",
+            "date": "2023-03-05T21:09:41.555106Z",
+            "id": 3,
+            "account_number": "0000000000000001"
+        },
+    ]
+    ```
+* Error response: Couldn't find an account with the specified id
+
+## Get all transactions of the user
+
+Returns all the transactions of the user.
+
+* Require Authentication: true
+* Request
+  * Method: GET
+  * URL: accounts/transactions/all/
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+        "transactions": [
+            {
+                "transaction_type": "DEBIT",
+                "amount": 200.23,
+                "note": "1",
+                "date": "2023-03-05T20:58:23.368308Z",
+                "id": 2,
+                "account_number": "0000000000000001"
+            },
+            {
+                "transaction_type": "DEBIT",
+                "amount": 1.11,
+                "note": "41234132423",
+                "date": "2023-03-05T21:09:41.555106Z",
+                "id": 3,
+                "account_number": "0000000000000001"
+            },
+        ]
+    }
+    ```

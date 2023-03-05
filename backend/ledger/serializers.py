@@ -96,3 +96,25 @@ class TransactionSerializer(serializers.ModelSerializer):
         instance = self.Meta.model(**validated_data)
         instance.save()
         return instance
+
+class AccountTransactionsSerializer(serializers.ModelSerializer):
+    account_number = serializers.CharField(source='account_id.account_number', read_only=True)
+
+    class Meta:
+        model = Transaction
+        fields = ('transaction_type','amount','note','date','id','account_number')
+
+    def create(self, validated_data):
+        # print(validated_data,"\n\n\n")
+        # password = validated_data.pop('password', None)
+        # email = validated_data.get('email')
+        # account_owner = validated_data.get('account_owner')
+
+        # if CustomUser.objects.filter(email=email).exists() or CustomUser.objects.filter(username=username).exists():
+        #     raise serializers.ValidationError('User with this email or username already exists')
+
+        instance = self.Meta.model(**validated_data)  # as long as the fields are the same, we can just use this
+        # if password is not None:
+        #     instance.set_password(password)
+        instance.save()
+        return instance
