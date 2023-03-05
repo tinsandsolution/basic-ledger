@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from .serializers import AccountSerializer, AllAccountsSerializer, TransactionSerializer, AccountTransactionsSerializer
 from .models import Account, Transaction
 from django.db import models
+from decimal import Decimal
 
 # Create your views here.
 # this a view to get all accounts by the current user
@@ -74,9 +75,9 @@ class AccountManager(APIView):
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
             if request.data['transaction_type'] == "DEBIT":
-                account.current_balance -= float(request.data['amount'])
+                account.current_balance -= Decimal(request.data['amount'])
             if request.data['transaction_type'] == "CREDIT":
-                account.current_balance += float(request.data['amount'])
+                account.current_balance += Decimal(request.data['amount'])
             account.save()
             serializer.save(account_id=account)
             # gets id and account id of the transaction
