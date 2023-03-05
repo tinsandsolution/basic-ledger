@@ -1,6 +1,7 @@
 from django.db import models
 from authentication.models import CustomUser
 from django.core.validators import MaxValueValidator
+from django.utils import timezone
 
 
 # Create your models here.
@@ -13,7 +14,7 @@ class Account(models.Model):
 class Transaction(models.Model):
     # id = models.AutoField(primary_key=True)
     account_id = models.ForeignKey(Account, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateTimeField(default=timezone.now)
     transaction_type = models.CharField(max_length=50)
     note = models.CharField(max_length=500)
     amount = models.FloatField()

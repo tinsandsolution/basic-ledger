@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Account
+from .models import Account, Transaction
 
 class AccountSerializer(serializers.ModelSerializer):
     # email = serializers.EmailField(
@@ -54,5 +54,26 @@ class AllAccountsSerializer(serializers.ModelSerializer):
         instance = self.Meta.model(**validated_data)  # as long as the fields are the same, we can just use this
         # if password is not None:
         #     instance.set_password(password)
+        instance.save()
+        return instance
+
+class TransactionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Transaction
+        fields = ('id','account','transaction_type','transaction_amount','transaction_date','transaction_description')
+
+    '''
+    {
+      "account_id": 1,
+      "transaction_type": "DEBIT",
+      "note": "monthly job salary",
+      "amount": 7750
+    }
+    '''
+
+
+    def create(self, validated_data):
+        instance = self.Meta.model(**validated_data)
         instance.save()
         return instance

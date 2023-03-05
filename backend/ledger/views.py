@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import AccountSerializer, AllAccountsSerializer
-from .models import Account
+from .serializers import AccountSerializer, AllAccountsSerializer, TransactionSerializer
+from .models import Account, Transaction
 from django.db import models
 
 # Create your views here.
@@ -43,21 +43,31 @@ class AccountCreate(APIView):
 
 class AccountManager(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-
-    def get(self, request, account_number, format='json'):
+    def get(self, request, account_id, format='json'):
         '''
         get balance of a single account
         '''
-        account = Account.objects.get(account_number=account_number)
+        try:
+            account = Account.objects.get(id=account_id)
+        except Account.DoesNotExist:
+            return Response({'error' : "Account couldn't be found"}, status=status.HTTP_404_NOT_FOUND)
+        if request.user.id != account.account_owner.id:
+            return Response({'error' : "You don't have permission to access this account"}, status=status.HTTP_401_UNAUTHORIZED)
         serializer = AllAccountsSerializer(account)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request, account_number, format='json'):
+    def post(self, request, account_id, format='json'):
         '''
         update balance of a single account
         '''
-        account = Account.objects.get(account_number=account_number)
-        serializer = AllAccountsSerializer(account, data=request.data)
+        try:
+            account = Account.objects.get(id=account_id)
+        except Account.DoesNotExist:
+            return Response({'error' : "Account couldn't be found"}, status=status.HTTP_404_NOT_FOUND)
+        if request.user.id != account.account_owner.id:
+            return Response({'error' : "You don't have permission to access this account"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        serializer = TransactionSerializer(account, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

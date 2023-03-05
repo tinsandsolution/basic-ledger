@@ -31,8 +31,7 @@ All endpoints that require a current user to be logged in.
 
     ```json
     {
-      "message": "Authentication required",
-      "statusCode": 401
+        "error": "Authentication credentials were not provided."
     }
     ```
 
@@ -43,7 +42,7 @@ correct role(s) or permission(s).
 
 * Request: endpoints that require proper authorization
 * Error Response: Require proper authorization
-  * Status Code: 403
+  * Status Code: 401
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -51,7 +50,7 @@ correct role(s) or permission(s).
     ```json
     {
       "message": "Forbidden",
-      "statusCode": 403
+      "statusCode": 401
     }
     ```
 
@@ -83,8 +82,9 @@ information.
 
     ```json
     {
-      "email": "john.smith@gmail.com",
-      "username": "JohnSmith",
+        "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwOTU4MzIzNSwiaWF0IjoxNjc4MDQ3MjM1LCJqdGkiOiI1MTA0NDNjMjg4MGM0ZDVhOWQ5NTI0OTQzNjgyYmE5NSIsInVzZXJfaWQiOjJ9.fUYqM2Ang8nR7mKlrCOKjb8QDD__oDiGiJPDapSpE50",
+        "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NTgzMjM1LCJpYXQiOjE2NzgwNDcyMzUsImp0aSI6ImE5ODFjNWE0NWQwNzRmMDY5ZTlhNTYzYzllOWVlNzA4IiwidXNlcl9pZCI6Mn0.XY5Ftqcft09WV7HVc_xWy4-fQRfMDdsIKlv5s0y6UOA",
+        "username": "ichiroa"
     }
     ```
 
@@ -248,7 +248,7 @@ Updates and returns an existing song.
 
     ```json
     {
-      "account_id": 1234567812345678,
+      "account_id": 1,
       "transaction_type": "DEBIT",
       "note": "monthly job salary",
       "amount": 7750
@@ -310,8 +310,7 @@ Updates and returns an existing song.
 
     ```json
     {
-      "message": "Account couldn't be found",
-      "statusCode": 404
+      "error": "Account couldn't be found",
     }
     ```
 
@@ -333,9 +332,11 @@ Returns the balance of an account by its id.
   * Body:
 
     ```json
-    {
-        "account_number" : 1234567812345678,
-        "current_balance" : 400
-    }
+      {
+          "id": 15,
+          "account_number": "0000000000000001",
+          "account_owner": 1,
+          "current_balance": 0.0
+      }
     ```
 * Error response: Couldn't find an account with the specified id
