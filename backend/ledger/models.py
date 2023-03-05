@@ -16,5 +16,5 @@ class Transaction(models.Model):
     account_id = models.ForeignKey(Account, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
     transaction_type = models.CharField(max_length=50)
-    note = models.CharField(max_length=500)
+    note = models.CharField(max_length=50)
     amount = models.FloatField()

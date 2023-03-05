@@ -58,10 +58,12 @@ class AllAccountsSerializer(serializers.ModelSerializer):
         return instance
 
 class TransactionSerializer(serializers.ModelSerializer):
+    note = serializers.CharField(max_length=50)
+
 
     class Meta:
         model = Transaction
-        fields = ('id','account','transaction_type','transaction_amount','transaction_date','transaction_description')
+        fields = ('transaction_type','amount','note')
 
     '''
     {
@@ -71,7 +73,24 @@ class TransactionSerializer(serializers.ModelSerializer):
       "amount": 7750
     }
     '''
+    def validate_note(self, value):
+        if len(value) == 0:
+            raise serializers.ValidationError("Note cannot be empty")
+        if len(value) > 500:
+            raise serializers.ValidationError("Note cannot be more than 50 characters")
+        return value
 
+    def validate_amount(self, value):
+        if value < 0:
+            raise serializers.ValidationError("Amount cannot be negative")
+        if (len(str(value).split('.')[1]) > 2):
+            raise serializers.ValidationError("Amount cannot have more than 2 decimal places")
+        return value
+
+    def validate_transaction_type(self, value):
+        if value not in ['DEBIT','CREDIT']:
+            raise serializers.ValidationError("Transaction type must be either DEBIT or CREDIT")
+        return value
 
     def create(self, validated_data):
         instance = self.Meta.model(**validated_data)

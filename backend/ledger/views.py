@@ -67,8 +67,19 @@ class AccountManager(APIView):
         if request.user.id != account.account_owner.id:
             return Response({'error' : "You don't have permission to access this account"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        serializer = TransactionSerializer(account, data=request.data)
+        if request.data['transaction_type'] == "DEBIT" and account.current_balance < request.data['amount']:
+            return Response({'error' : "Insufficient funds"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+        serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            if request.data['transaction_type'] == "DEBIT":
+                account.current_balance -= float(request.data['amount'])
+            if request.data['transaction_type'] == "CREDIT":
+                account.current_balance += float(request.data['amount'])
+            account.save()
+            serializer.save(account_id=account)
+            # gets id and account id of the transaction
+            transaction = Transaction.objects.last()
+            return Response(dict(serializer.data, **{"id" : transaction.id, "account_number" : transaction.account_id.account_number}), status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -264,7 +264,7 @@ Updates and returns an existing song.
     ```json
     {
       "id" : 1,
-      "account_id": 1234567812345678,
+      "account_number": "0123456701234567",
       "transaction_type": "DEBIT",
       "note": "monthly job salary",
       "amount": 7750
@@ -279,26 +279,20 @@ Updates and returns an existing song.
 
     ```json
     {
-      "message": "Validation Error",
-      "statusCode": 400,
-      "errors": {
-        "account_id": "Account id is required.",
-        "transaction_type": "Transaction must be either DEBIT or CREDIT",
-        "note": "Transaction Note cannot be empty",
-        "amount": "amount must be greater than 0"
-      }
+      "transaction_type": ["Transaction must be either DEBIT or CREDIT"],
+      "note": ["Transaction note cannot be blank", "Ensure this field has no more than 50 characters."],
+      "amount": ["Amount cannot be negative", "Amount cannot have more than 2 decimal places"]
     }
     ```
 * Error response: Account balance is not high enough for transaction
-  * Status Code: 406
+  * Status Code: 400
   * Headers:
     * Content-Type: application/json
   * Body:
 
     ```json
     {
-      "message": "Account balance too low",
-      "statusCode": 406
+      "error": "Insufficient funds",
     }
     ```
 
