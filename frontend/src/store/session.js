@@ -31,7 +31,6 @@ export const authenticate = () => async (dispatch) => {
     if (data.errors) {
       return;
     }
-    console.log(data)
     dispatch(setUser(data.username));
   }
 }
@@ -58,7 +57,6 @@ export const login = (username, password) => async (dispatch) => {
   } else if (response.status < 500) {
     const data = await response.json();
     if (data.errors) {
-      console.log(data)
       return data.errors;
     }
   } else {
@@ -81,7 +79,6 @@ export const logout = () => async (dispatch) => {
 
 
 export const signUp = (email, password, username) => async (dispatch) => {
-  console.log(username, email, password)
   const response = await fetch('http://127.0.0.1:8000/api/user/create/', {
     method: 'POST',
     headers: {
