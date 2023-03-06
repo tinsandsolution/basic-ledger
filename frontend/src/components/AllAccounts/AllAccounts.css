@@ -4,6 +4,8 @@
     width: 300px;
     aspect-ratio: 5/2.5;
     margin: 2%;
+    padding: 2%;
+    box-sizing: border-box;
 }
 
 .all-accounts {
@@ -15,4 +17,23 @@
     width: 100%;
     /* height: 100%; */
     /* border: 1px solid blue; */
+}
+
+.account-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.account-name {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.account-balance {
+    font-size: 18px;
+    /* font-weight: 300; */
+    display: flex;
+    margin-top: 3%;
+    flex-direction: row;
+    justify-content: space-between;
 }
