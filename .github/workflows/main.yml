@@ -31,7 +31,7 @@ jobs:
     - run: pip install pipenv
 
     - name: Update requirements.txt for container install
-      run: pipenv requirements > ./backend/requirements.txt
+      run: pipenv requirements > backend/requirements.txt
 
     - name: Login to Heroku Container registry
       env:
@@ -51,4 +51,4 @@ jobs:
     - name: Run DB Migration
       env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku run -a ${{ secrets.HEROKU_APP_NAME }} flask db upgrade
+      run: heroku run -a ${{ secrets.HEROKU_APP_NAME }} python backend/manage.py migrate
