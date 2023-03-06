@@ -1,20 +1,8 @@
-So, the stack that I'm expected to build this with is:
 
-- Python
-- React.js
-- Django REST framework
-- Docker
-- Go
-
-This is the database schema:
 
 ![database schema](https://i.imgur.com/9gV6sQ6.png)
 
 https://mui.com/material-ui/getting-started/installation/
-
-Notes:
-
-Because user authentication is not a core part of this assessment,
 
 # API Routes
 
