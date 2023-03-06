@@ -28,10 +28,10 @@ jobs:
       with:
         python-version: '3.9'
         cache: 'pip'
-    - run: pip install pipenv
+    - run: cd backend && pip install pipenv
 
     - name: Update requirements.txt for container install
-      run: pipenv requirements > backend/requirements.txt
+      run: pipenv requirements > requirements.txt && cd ..
 
     - name: Login to Heroku Container registry
       env:
