@@ -22,7 +22,7 @@ const setAllTransactions = (transactions) => ({
 const initialState = { };
 
 export const getAllAccounts = () => async (dispatch) => {
-  const response = await fetch('http://127.0.0.1:8000/api/accounts/',{
+  const response = await fetch('/api/accounts/',{
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const getAllAccounts = () => async (dispatch) => {
 }
 
 export const getAccountTransactions = (accountId) => async (dispatch) => {
-    const response = await fetch(`http://127.0.0.1:8000/api/accounts/${accountId}/transactions/`,{
+    const response = await fetch(`/api/accounts/${accountId}/transactions/`,{
       method: "GET",
       headers: {
           'Content-Type': 'application/json',

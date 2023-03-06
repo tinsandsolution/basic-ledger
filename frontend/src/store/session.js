@@ -20,7 +20,7 @@ const removeUser = () => ({
 const initialState = { user: null };
 
 export const authenticate = () => async (dispatch) => {
-  const response = await fetch('http://127.0.0.1:8000/api/user/hello/', {
+  const response = await fetch('/api/user/hello/', {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -36,7 +36,7 @@ export const authenticate = () => async (dispatch) => {
 }
 
 export const login = (username, password) => async (dispatch) => {
-  const response = await fetch('http://127.0.0.1:8000/api/user/login/', {
+  const response = await fetch('/api/user/login/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ export const logout = () => async (dispatch) => {
 
 
 export const signUp = (email, password, username) => async (dispatch) => {
-  const response = await fetch('http://127.0.0.1:8000/api/user/create/', {
+  const response = await fetch('/api/user/create/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
