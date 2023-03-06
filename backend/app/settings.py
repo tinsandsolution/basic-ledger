@@ -80,7 +80,7 @@ if pg_url:
             'USER': listOfVals[0],
             'PASSWORD': listOfVals[1].split('@')[0],
             'HOST': listOfVals[1].split('@')[1],
-            'PORT': listOfVals[3],
+            'PORT': listOfVals[2],
         }
     }
 else:
