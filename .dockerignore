@@ -1,8 +1,0 @@
-react-app/node_modules
-.venv
-Pipfile
-Pipfile.lock
-env
-.env
-.DS_Store
-Dockerfile
