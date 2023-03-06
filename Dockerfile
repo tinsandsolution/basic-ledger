@@ -8,5 +8,5 @@ COPY . .
 COPY /frontend/build/* backend/app/static/
 RUN ls
 RUN pip install -r backend/requirements.txt
-WORKDIR backend
-CMD gunicorn --bind 0.0.0.0:8000 app.wsgi:application
+WORKDIR backend/app
+CMD gunicorn --bind 0.0.0.0:8000 wsgi:application
