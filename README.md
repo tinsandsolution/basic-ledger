@@ -1,8 +1,25 @@
+In the frontend folder:
 
+```
+npm install
+npm start
+```
+
+In the backend folder:
+
+```
+pipenv shell
+pip install requirements.txt
+python manage.py migrate
+```
+
+in backend/app/settings.py, the default database is postgresql. Default credentials are provided, but if there is an environment variable set to DATABASE_URL, then that postgres URI will be used.
 
 ![database schema](https://i.imgur.com/9gV6sQ6.png)
 
 https://mui.com/material-ui/getting-started/installation/
+
+
 
 # API Routes
 
