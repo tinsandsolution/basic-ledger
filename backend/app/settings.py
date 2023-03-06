@@ -1,6 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -68,7 +69,22 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+pg_url = os.environ.get('DATABASE_URL')
+if pg_url:
+    o = urlparse(pg_url)
+    listOfVals = o.netloc.split(':')
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': o.path[1:],
+            'USER': listOfVals[0],
+            'PASSWORD': listOfVals[1].split('@')[0],
+            'HOST': listOfVals[1].split('@')[1],
+            'PORT': listOfVals[3],
+        }
+    }
+else:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'finallydb',
@@ -77,8 +93,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     }
-}
-
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
