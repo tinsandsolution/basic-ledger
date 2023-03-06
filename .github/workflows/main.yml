@@ -31,7 +31,7 @@ jobs:
     - run: cd backend && pip install pipenv
 
     - name: Update requirements.txt for container install
-      run: pipenv requirements > backend/requirements.txt
+      run: cd backend && pipenv requirements > requirements.txt
 
     - name: Login to Heroku Container registry
       env:
