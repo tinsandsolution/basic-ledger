@@ -16,12 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from ledger.views import AllTransactions
-
+from django.contrib.staticfiles.views import serve
+from django.urls import re_path
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/transactions/all/', AllTransactions.as_view(), name="all_transactions"),
     path('api/accounts/', include('ledger.urls')),
     path('api/', include('authentication.urls')),
-
+    # view for serving react app, index function in views.py
+    path('', views.index, name='index'),
+    # serve the favicon
+    re_path(r'^favicon\.ico$', serve, {'path': 'static/favicon.ico'}),
+    # serve the manifest.json
+    re_path(r'^manifest\.json$', serve, {'path': 'static/manifest.json'}),
 ]

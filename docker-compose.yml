@@ -1,0 +1,22 @@
+# backend on 8000 and nginx on 80
+version: '3.7'
+services:
+  reverse-proxy:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    ports:
+      - 80:80
+    environment:
+      - SERVER_NAME=localhost
+    depends_on:
+      - backend
+    links:
+      - backend
+  backend:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - REACT_APP_BASE_URL=http://localhost:8000
+      - DATABASE_URL=postgres://sxtwzmpjrxqnll:10d082f58a6ac668fe0fa8eea80bf0ce8a71f93a84663f87538038a19af8a5d1@ec2-34-197-84-74.compute-1.amazonaws.com:5432/db1nn93oj31pld
