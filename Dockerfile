@@ -6,5 +6,6 @@ ENV REACT_APP_BASE_URL=https://scenesoiltemp.herokuapp.com/
 WORKDIR /var/www
 COPY . .
 COPY /frontend/build/* /backend/app/static/
-RUN pip install -r /backend/requirements.txt
+RUN ls
+RUN pip install -r backend/requirements.txt
 CMD gunicorn backend.wsgi:application
