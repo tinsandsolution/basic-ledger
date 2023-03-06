@@ -5,8 +5,8 @@ ENV REACT_APP_BASE_URL=https://scenesoiltemp.herokuapp.com/
 # ENV SQLALCHEMY_ECHO=True
 WORKDIR /var/www
 COPY . .
-COPY /frontend/build/* /backend/app/static/
+COPY /frontend/build/* backend/app/static/
 RUN ls
 RUN pip install -r backend/requirements.txt
-WORKDIR "/backend"
-CMD ["gunicorn", "app.wsgi:application", "--bind", "0.0.0.0:8000"]
+WORKDIR backend
+CMD gunicorn --bind 0.0.0.0:8000 app.wsgi:application
