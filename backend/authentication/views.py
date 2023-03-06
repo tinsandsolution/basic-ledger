@@ -19,7 +19,6 @@ class Hello(APIView):
 
 class ObtainTokenPair(TokenObtainPairView):
     permission_classes = (permissions.AllowAny,)
-    # this prints the entire request object
 
     serializer_class = MyTokenObtainPairSerializer
     def post(self, request, *args, **kwargs):
@@ -30,12 +29,10 @@ class ObtainTokenPair(TokenObtainPairView):
                             status=status.HTTP_400_BAD_REQUEST)
 
         user_model = get_user_model()
-        print("user model: " + str(user_model))
         try:
             user = user_model.objects.get(Q(username__iexact=username_or_email) | Q(email__iexact=username_or_email))
         except user_model.DoesNotExist:
             return Response({"errors" : ['No active account found with the given credentials']}, status=401)
-        # print(str(user))
         # Pass the user object to the serializer and also the 'username_or_email' value
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -50,7 +47,6 @@ class CustomUserCreate(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format='json'):
-        print(request.data)
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()

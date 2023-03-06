@@ -13,17 +13,13 @@ class AccountCreate(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, format='json'):
-        print(request.data)
         serializer = AccountSerializer(data=request.data)
-        print('at least were getting through here\n\n\n')
         if serializer.is_valid():
 
             row_with_highest_account = Account.objects.last()
-            print(row_with_highest_account,"\n\n\n")
             account_number = "0000000000000001"
             if row_with_highest_account != None:
                 account_number = str(int(row_with_highest_account.account_number) + 1)
-                print(int(row_with_highest_account.account_number),"\n\n\n")
                 leftover_zeros = 16 - len(account_number)
                 account_number = "0" * leftover_zeros + account_number
             account = serializer.save(account_owner=request.user,account_number=account_number)

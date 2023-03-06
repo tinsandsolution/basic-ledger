@@ -9,7 +9,6 @@ UserModel = get_user_model()
 
 class EmailBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
-        print("email backend")
         try:
             user = UserModel.objects.get(Q(username__iexact=username) | Q(email__iexact=username))
         except UserModel.DoesNotExist:
@@ -20,5 +19,4 @@ class EmailBackend(ModelBackend):
         if not user.check_password(password):
             return Response({"errors": ["No active account found with the given credentials"]}, status=401)
         if user.check_password(password) and self.user_can_authenticate(user):
-            print('authenticated')
             return user
