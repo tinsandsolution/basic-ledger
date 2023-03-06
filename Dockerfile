@@ -7,4 +7,4 @@ WORKDIR /var/www
 COPY . .
 COPY /react-app/build/* app/static/
 RUN pip install -r ./app/requirements.txt
-CMD gunicorn app:app
+CMD gunicorn backend.wsgi:application
