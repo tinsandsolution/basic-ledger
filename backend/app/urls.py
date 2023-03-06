@@ -20,7 +20,8 @@ from ledger.views import AllTransactions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/transactions/all/', AllTransactions.as_view(), name="all_transactions"),
     path('api/accounts/', include('ledger.urls')),
     path('api/', include('authentication.urls')),
-    path('api/transactions/all/', AllTransactions.as_view(), name="all_transactions")
+
 ]
