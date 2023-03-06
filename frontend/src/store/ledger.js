@@ -55,7 +55,6 @@ export const getAccountTransactions = (accountId) => async (dispatch) => {
       }
 
       dispatch(setAccountTransactions(data,accountId));
-      // console.log(data)
     }
   }
 
@@ -86,10 +85,11 @@ export default function reducer(state = initialState, action) {
     case SET_ACCOUNT_TRANSACTIONS:
       let newState = state;
       // inside accounts, find the account with the id that matches the payload's account id
-      console.log(action.account_id)
+    //   console.log(action.account_id)
       newState.accounts.forEach((account) => {
         if (account.id === action.account_id) {
-          account.transactions = action.payload;
+          if (action.payload.length > 0) account.transactions = action.payload;
+          else account.transactions = ["No transactions"];
         }
       });
       return newState;

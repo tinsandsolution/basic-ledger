@@ -6,6 +6,7 @@ import { redirect } from 'react-router-dom';
 import './LoggedInPage.css';
 import { Button } from '@mui/material';
 import AccountsPage from '../AllAccounts';
+import AllTransactionsPage from '../Transactions';
 
 const LoggedInPage = () => {
   const [view, setView] = useState("accounts");
@@ -37,7 +38,7 @@ const LoggedInPage = () => {
         </div>
       </div>
       <div className='main'>
-        {view === "accounts" ? <AccountsPage /> : <div>transactions</div>}
+        {view === "accounts" ? <AccountsPage /> : <AllTransactionsPage />}
       </div>
     </div>
   );

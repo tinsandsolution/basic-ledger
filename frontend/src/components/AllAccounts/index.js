@@ -16,12 +16,11 @@ const AccountsPage = () => {
   // we're going to sort accounts by account number
   if (accounts) accounts.sort((a, b) => a.account_number - b.account_number);
 
-
   useEffect(() => {
     (async() => {
       await dispatch(getAllAccounts());
-      await dispatch(getAccountTransactions(15));
-      await dispatch(getAllTransactions());
+    //   await dispatch(getAccountTransactions(15));
+    //   await dispatch(getAllTransactions());
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -47,13 +46,16 @@ const AccountsPage = () => {
                 <div className='account-show-transactions'>
                     <Button
                         variant={clickedAccount === account.id ? "contained" : "outlined"}
-                        onClick={() => setClickedAccount(account.id)}
+                        onClick={() => {
+                            setClickedAccount(account.id)
+                        }}
                         size='small'
                     >Show Transactions</Button>
                 </div>
             </div>
             ))}
         </div>
+        { clickedAccount && <TransactionsPage account_id={clickedAccount} />}
     </>
   );
 };

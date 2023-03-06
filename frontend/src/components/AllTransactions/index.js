@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { getAllTransactions } from '../../store/ledger';
+import { getAccountTransactions } from '../../store/ledger';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,19 +18,20 @@ const formatDate = (complicatedDate) => {
     return `${month} ${day}, ${year}`;
 }
 
-const AllTransactionsPage = ({account_id}) => {
+const TransactionsPage = ({account_id}) => {
     const dispatch = useDispatch();
     const [isLoaded, setLoaded] = useState(false);
-    const transactions = useSelector(state => state.ledger.transactions);
+    const accounts = useSelector(state => state.ledger.accounts);
 
     useEffect(() => {
         (async() => {
-            await dispatch(getAllTransactions());
+            await dispatch(getAccountTransactions(account_id));
             setLoaded(true);
         })();
       }, [dispatch]);
 
     if (!isLoaded) return <></>
+    const transactions = accounts.find(account => account.id === account_id).transactions;
     return (
         <div className='transactions'>
             <TableContainer component={Paper}>
@@ -68,4 +69,4 @@ const AllTransactionsPage = ({account_id}) => {
     )
 }
 
-export default AllTransactionsPage;
+export default TransactionsPage;
