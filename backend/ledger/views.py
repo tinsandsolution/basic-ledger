@@ -17,7 +17,6 @@ class AccountCreate(APIView):
         serializer = AccountSerializer(data=request.data)
         print('at least were getting through here\n\n\n')
         if serializer.is_valid():
-            print('valid\n\n\n')
 
             row_with_highest_account = Account.objects.last()
             print(row_with_highest_account,"\n\n\n")

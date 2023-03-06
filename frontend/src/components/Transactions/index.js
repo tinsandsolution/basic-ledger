@@ -18,6 +18,13 @@ const formatDate = (complicatedDate) => {
     return `${month} ${day}, ${year}`;
 }
 
+const clipNote = (note) => {
+    if (note.length > 20) {
+        return note.slice(0, 20) + "...";
+    }
+    return note;
+}
+
 const AllTransactionsPage = ({account_id}) => {
     const dispatch = useDispatch();
     const [isLoaded, setLoaded] = useState(false);
@@ -57,7 +64,7 @@ const AllTransactionsPage = ({account_id}) => {
                     <TableCell align="center">{formatDate(row.date)}</TableCell>
                     <TableCell align="center">{row.transaction_type}</TableCell>
                     <TableCell align="center">***{row.account_number.slice(-4)}</TableCell>
-                    <TableCell align="center">{row.note}</TableCell>
+                    <TableCell align="center">{clipNote(row.note)}</TableCell>
                     <TableCell align="center">{row.transaction_type === "CREDIT" ? "+" : "-"}{row.amount}</TableCell>
                     </TableRow>
                 ))}

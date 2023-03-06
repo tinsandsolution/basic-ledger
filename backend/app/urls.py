@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from ledger.views import AllTransactions
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('ledger.urls')),
-    path('api/', include('authentication.urls'))
+    path('api/', include('authentication.urls')),
+    path('api/transactions/all/', AllTransactions.as_view(), name="all_transactions")
 ]

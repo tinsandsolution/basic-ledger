@@ -383,7 +383,7 @@ Returns all the transactions of the user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: accounts/transactions/all/
+  * URL: /transactions/all/
   * Body: none
 
 * Successful Response
